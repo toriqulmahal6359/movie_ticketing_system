@@ -1,7 +1,16 @@
+using eMovieTickets.Data;
+using eMovieTickets.Data.Services;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+//Service of DbContext
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
+//Service Configuration
+builder.Services.AddScoped<IActorService, ActorsService>();
+// 
 
 var app = builder.Build();
 
@@ -23,5 +32,8 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+//Seeding database
+AppDbInitializer.Seed(app);
 
 app.Run();
