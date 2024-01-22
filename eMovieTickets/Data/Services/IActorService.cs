@@ -9,5 +9,6 @@ namespace eMovieTickets.Data.Services
         Task AddAsync(Actor actor);
         Task<Actor> UpdateAsync(int id, Actor newActor);
         Task DeleteAsync(int id);
+
     }
 }
